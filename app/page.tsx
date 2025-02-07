@@ -9,11 +9,11 @@ import VideoGridModal from "./components/VideoGridModal"
 const videos = [
   {
     id: 1,
-    title: "TopoDot",
-    description: "TopoDot",
+    title: "Mach9 Geoweek Booth",
+    description: "Mach9 Geoweek Booth",
     thumbnail: "/placeholder.svg?height=180&width=320",
-    keywords: ["AI", "ML", "data science", "algorithms"],
-    videoSrc: "/videos/topo_volume.mp4"
+    keywords: ["Mach9", "Geoweek"],
+    videoSrc: "/videos/Geoweek_Booth_Video.mp4"
   },
   {
     id: 2,

@@ -8,6 +8,8 @@ import {
   SkipForward,
   Volume2,
   VolumeX,
+  Maximize2,
+  Minimize2,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Slider } from "@/components/ui/slider"
@@ -30,6 +32,9 @@ export default function VideoPlayer({ video }: VideoPlayerProps) {
   const [duration, setDuration] = useState(0)
   const [volume, setVolume] = useState(1)
   const [isMuted, setIsMuted] = useState(true) // start muted for autoplay
+
+  // Fullscreen state
+  const [isFullscreen, setIsFullscreen] = useState(false)
 
   // Controls fade state
   const [showControls, setShowControls] = useState(true)
@@ -68,6 +73,18 @@ export default function VideoPlayer({ video }: VideoPlayerProps) {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current)
       }
+    }
+  }, [])
+
+  // Listen for fullscreen change to update isFullscreen state
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(!!document.fullscreenElement)
+    }
+
+    document.addEventListener("fullscreenchange", handleFullscreenChange)
+    return () => {
+      document.removeEventListener("fullscreenchange", handleFullscreenChange)
     }
   }, [])
 
@@ -148,6 +165,24 @@ export default function VideoPlayer({ video }: VideoPlayerProps) {
    */
   const handleMouseMove = () => {
     resetControlsFade()
+  }
+
+  /**
+   * Toggle fullscreen mode for the video
+   */
+  const toggleFullScreen = () => {
+    if (!videoRef.current) return
+    if (!document.fullscreenElement) {
+      // Enter fullscreen
+      videoRef.current.requestFullscreen().catch((err) => {
+        console.error("Error attempting to enter fullscreen:", err)
+      })
+    } else {
+      // Exit fullscreen
+      document.exitFullscreen().catch((err) => {
+        console.error("Error attempting to exit fullscreen:", err)
+      })
+    }
   }
 
   return (
@@ -243,6 +278,15 @@ export default function VideoPlayer({ video }: VideoPlayerProps) {
               onValueChange={handleVolumeChange}
               className="w-24"
             />
+
+            {/* Fullscreen Button */}
+            <Button variant="ghost" size="icon" onClick={toggleFullScreen}>
+              {isFullscreen ? (
+                <Minimize2 className="h-4 w-4 text-white" />
+              ) : (
+                <Maximize2 className="h-4 w-4 text-white" />
+              )}
+            </Button>
           </div>
         </div>
       </div>
