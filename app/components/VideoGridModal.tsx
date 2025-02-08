@@ -58,12 +58,12 @@ export default function VideoGridModal({
         </div>
 
         {/* Header with Logo & Search */}
-        <div className="flex justify-between items-center px-4 py-2 border-b border-[#27272a] bg-[#101112] h-16">
+        <div className="flex justify-between items-center px-4 py-2 border-b border-[#27272a] bg-[#101112] h-20">
           <div className="flex items-center">
             <img
               src="Mach9_White.png"
               alt="Mach9 Logo"
-              className="h-10 object-contain"
+              className="h-20 object-contain"
             />
           </div>
           <Input
